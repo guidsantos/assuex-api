@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  name      String
+  last_name String
+  password  String
+  cpf       String @unique
+  phone String 
+}
+
+// model Passageiro {
+//   id Int     @id @default(autoincrement())
+//   bith_date DateTime
+//   cep String
+//   address String
+//   Number Int
+//   complement String
+//   Bairro String
+//   Cidade String
+//   linha_interesse String
+//   start_date DateTime
+//   start_point String
+//   end_point String
+//   back_point String
+// }
+
+// model Driver {
+//   id Int @id @default(autoincrement())
+//   company String
+//   cnh String
+// }
+
+// model Line {
+//   id Int     @id @default(autoincrement())
+//   name String
+//   start_point String
+//   end_point String
+// }
+
+// model StopPoint {
+//   id Int     @id @default(autoincrement())
+//   address String
+// }
