@@ -35,59 +35,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
-exports.CreateUserUseCase = void 0;
-var client_1 = require("@prisma/client");
-var bcrypt_1 = require("bcrypt");
-var AppError_1 = __importDefault(require("../../../../utils/errors/AppError"));
-var prisma = new client_1.PrismaClient();
-var CreateUserUseCase = /** @class */ (function () {
-    function CreateUserUseCase() {
+exports.CreateUserController = void 0;
+var CreatePassagerUseCase_1 = require("./CreatePassagerUseCase");
+var CreateUserController = /** @class */ (function () {
+    function CreateUserController() {
     }
-    CreateUserUseCase.prototype.execute = function (bodyData) {
+    CreateUserController.prototype.handle = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var clientExist, hashPassword, data, client, responseClient;
+            var bodyData, createPassagerUseCase, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, prisma.user.findFirst({
-                            where: {
-                                email: bodyData.email
-                            }
-                        })];
+                    case 0:
+                        bodyData = req.body;
+                        createPassagerUseCase = new CreatePassagerUseCase_1.CreatePassagerUseCase();
+                        return [4 /*yield*/, createPassagerUseCase.execute(bodyData)];
                     case 1:
-                        clientExist = _a.sent();
-                        if (clientExist) {
-                            throw new AppError_1["default"]("user already exists", 401);
-                        }
-                        return [4 /*yield*/, (0, bcrypt_1.hash)(bodyData.password, 10)];
-                    case 2:
-                        hashPassword = _a.sent();
-                        data = {
-                            name: bodyData.name,
-                            email: bodyData.email,
-                            last_name: bodyData.last_name,
-                            cpf: bodyData.cpf,
-                            phone: bodyData.phone,
-                            password: hashPassword
-                        };
-                        return [4 /*yield*/, prisma.user.create({
-                                data: data
-                            })];
-                    case 3:
-                        client = _a.sent();
-                        responseClient = {
-                            id: client.id,
-                            name: client.name + " " + client.last_name,
-                            email: client.email
-                        };
-                        return [2 /*return*/, responseClient];
+                        result = _a.sent();
+                        return [2 /*return*/, res.json(result)];
                 }
             });
         });
     };
-    return CreateUserUseCase;
+    return CreateUserController;
 }());
-exports.CreateUserUseCase = CreateUserUseCase;
+exports.CreateUserController = CreateUserController;

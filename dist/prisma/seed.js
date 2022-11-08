@@ -47,9 +47,12 @@ function run() {
                         where: { email: "user@example.com" },
                         update: {},
                         create: {
-                            email: "user@example.com",
-                            name: "Jason",
-                            password: "123"
+                            email: "seed@test.com",
+                            password: "123",
+                            name: "Seed",
+                            last_name: "Create user",
+                            cpf: "142.124.124-12",
+                            phone: "11 9128-1234"
                         }
                     })];
                 case 1:

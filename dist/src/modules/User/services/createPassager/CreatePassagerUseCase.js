@@ -39,55 +39,54 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.CreateUserUseCase = void 0;
+exports.CreatePassagerUseCase = void 0;
 var client_1 = require("@prisma/client");
-var bcrypt_1 = require("bcrypt");
 var AppError_1 = __importDefault(require("../../../../utils/errors/AppError"));
 var prisma = new client_1.PrismaClient();
-var CreateUserUseCase = /** @class */ (function () {
-    function CreateUserUseCase() {
+var CreatePassagerUseCase = /** @class */ (function () {
+    function CreatePassagerUseCase() {
     }
-    CreateUserUseCase.prototype.execute = function (bodyData) {
+    CreatePassagerUseCase.prototype.execute = function (_a) {
+        var bith_date = _a.bith_date, cep = _a.cep, address = _a.address, number = _a.number, complement = _a.complement, bairro = _a.bairro, cidade = _a.cidade, linha_interesse = _a.linha_interesse, start_date = _a.start_date, start_point = _a.start_point, end_point = _a.end_point, back_point = _a.back_point, userId = _a.userId;
         return __awaiter(this, void 0, void 0, function () {
-            var clientExist, hashPassword, data, client, responseClient;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var clientExist, formatData, client;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0: return [4 /*yield*/, prisma.user.findFirst({
                             where: {
-                                email: bodyData.email
+                                id: userId
                             }
                         })];
                     case 1:
-                        clientExist = _a.sent();
-                        if (clientExist) {
-                            throw new AppError_1["default"]("user already exists", 401);
+                        clientExist = _b.sent();
+                        if (!clientExist) {
+                            throw new AppError_1["default"]("user don't exists", 401);
                         }
-                        return [4 /*yield*/, (0, bcrypt_1.hash)(bodyData.password, 10)];
-                    case 2:
-                        hashPassword = _a.sent();
-                        data = {
-                            name: bodyData.name,
-                            email: bodyData.email,
-                            last_name: bodyData.last_name,
-                            cpf: bodyData.cpf,
-                            phone: bodyData.phone,
-                            password: hashPassword
+                        formatData = {
+                            bith_date: new Date(bith_date),
+                            cep: cep,
+                            address: address,
+                            number: number,
+                            complement: complement,
+                            bairro: bairro,
+                            cidade: cidade,
+                            linha_interesse: linha_interesse,
+                            start_date: new Date(start_date),
+                            start_point: start_point,
+                            end_point: end_point,
+                            back_point: back_point,
+                            userId: userId
                         };
-                        return [4 /*yield*/, prisma.user.create({
-                                data: data
+                        return [4 /*yield*/, prisma.passageiro.create({
+                                data: formatData
                             })];
-                    case 3:
-                        client = _a.sent();
-                        responseClient = {
-                            id: client.id,
-                            name: client.name + " " + client.last_name,
-                            email: client.email
-                        };
-                        return [2 /*return*/, responseClient];
+                    case 2:
+                        client = _b.sent();
+                        return [2 /*return*/, client];
                 }
             });
         });
     };
-    return CreateUserUseCase;
+    return CreatePassagerUseCase;
 }());
-exports.CreateUserUseCase = CreateUserUseCase;
+exports.CreatePassagerUseCase = CreatePassagerUseCase;

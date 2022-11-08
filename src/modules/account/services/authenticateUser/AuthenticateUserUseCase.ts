@@ -17,17 +17,17 @@ const prisma = new PrismaClient();
 export class AuthenticateUserUseCase {
   async execute({ email, password }: ICreateClient) {
     //Validar se usuario existe
-    const user = await prisma.user.findFirst({
+    const bodyUser = await prisma.user.findFirst({
       where: {
         email,
       },
     });
 
-    if (!user) {
+    if (!bodyUser) {
       throw new AppError("user don't exists", 400);
     }
     //Croptografar senha
-    const authenticate = compare(password, user.password);
+    const authenticate = await compare(password, bodyUser.password);
 
     if (!authenticate) {
       throw new AppError("invalid login", 400);
@@ -36,14 +36,14 @@ export class AuthenticateUserUseCase {
     const { secret, expiresIn } = authConfig.jwt;
 
     const token = sign({}, secret, {
-      subject: String(user.id),
+      subject: String(bodyUser.id),
       expiresIn,
     });
 
-    const responseUser = { name: user.name, email: user.email };
+    const user = { id: bodyUser.id, name: bodyUser.name+" "+bodyUser.last_name, email: bodyUser.email };
 
     return {
-      responseUser,
+      user,
       token,
     };
   }

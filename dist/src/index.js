@@ -8,7 +8,9 @@ require("express-async-errors");
 var express_1 = __importDefault(require("express"));
 var routes_1 = require("./routes");
 var AppError_1 = __importDefault(require("./utils/errors/AppError"));
+var cors_1 = __importDefault(require("cors"));
 var app = (0, express_1["default"])();
+app.use((0, cors_1["default"])());
 app.use(express_1["default"].json());
 app.use(routes_1.routes);
 app.use(function (err, request, response, _) {
@@ -22,6 +24,6 @@ app.use(function (err, request, response, _) {
         .status(500)
         .json({ status: "error", message: "Internal server error" });
 });
-app.listen(3000, function () {
-    console.log("App listening on port 3000");
+app.listen(3333, function () {
+    console.log("App listening on port 3333");
 });

@@ -37,24 +37,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.CreateUserController = void 0;
-var CreateUserUseCase_1 = require("../useCases/createUser/CreateUserUseCase");
+var CreateUserUseCase_1 = require("../services/createUser/CreateUserUseCase");
 var CreateUserController = /** @class */ (function () {
     function CreateUserController() {
     }
     CreateUserController.prototype.handle = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, email, password, createUserUseCase, result;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var bodyData, createUserUseCase, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _a = req.body, email = _a.email, password = _a.password;
+                        bodyData = req.body;
                         createUserUseCase = new CreateUserUseCase_1.CreateUserUseCase();
-                        return [4 /*yield*/, createUserUseCase.execute({
-                                email: email,
-                                password: password
-                            })];
+                        return [4 /*yield*/, createUserUseCase.execute(bodyData)];
                     case 1:
-                        result = _b.sent();
+                        result = _a.sent();
                         return [2 /*return*/, res.json(result)];
                 }
             });
