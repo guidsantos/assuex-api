@@ -39,55 +39,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.CreatePassagerUseCase = void 0;
+exports.CreateLineUseCase = void 0;
 var client_1 = require("@prisma/client");
 var AppError_1 = __importDefault(require("../../../../utils/errors/AppError"));
 var prisma = new client_1.PrismaClient();
-var CreatePassagerUseCase = /** @class */ (function () {
-    function CreatePassagerUseCase() {
+var CreateLineUseCase = /** @class */ (function () {
+    function CreateLineUseCase() {
     }
-    CreatePassagerUseCase.prototype.execute = function (_a) {
-        var bith_date = _a.bith_date, cep = _a.cep, address = _a.address, number = _a.number, complement = _a.complement, bairro = _a.bairro, cidade = _a.cidade, linha_interesse = _a.linha_interesse, start_date = _a.start_date, start_point = _a.start_point, end_point = _a.end_point, back_point = _a.back_point, finish_point = _a.finish_point, userId = _a.userId;
+    CreateLineUseCase.prototype.execute = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var clientExist, formatData, client;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, prisma.user.findFirst({
+            var lineExist, line;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, prisma.line.findFirst({
                             where: {
-                                id: userId
+                                name: data.name
                             }
                         })];
                     case 1:
-                        clientExist = _b.sent();
-                        if (!clientExist) {
-                            throw new AppError_1["default"]("user don't exists", 401);
+                        lineExist = _a.sent();
+                        if (lineExist) {
+                            throw new AppError_1["default"]("line already exists", 401);
                         }
-                        formatData = {
-                            bith_date: new Date(bith_date),
-                            cep: cep,
-                            address: address,
-                            number: number,
-                            complement: complement,
-                            bairro: bairro,
-                            cidade: cidade,
-                            linha_interesse: linha_interesse,
-                            start_date: new Date(start_date),
-                            start_point: start_point,
-                            end_point: end_point,
-                            back_point: back_point,
-                            finish_point: finish_point,
-                            userId: userId
-                        };
-                        return [4 /*yield*/, prisma.passager.create({
-                                data: formatData
+                        return [4 /*yield*/, prisma.line.create({
+                                data: data
                             })];
                     case 2:
-                        client = _b.sent();
-                        return [2 /*return*/, client];
+                        line = _a.sent();
+                        return [2 /*return*/, line];
                 }
             });
         });
     };
-    return CreatePassagerUseCase;
+    return CreateLineUseCase;
 }());
-exports.CreatePassagerUseCase = CreatePassagerUseCase;
+exports.CreateLineUseCase = CreateLineUseCase;

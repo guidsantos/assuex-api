@@ -39,55 +39,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.CreatePassagerUseCase = void 0;
+exports.CreateDriverUseCase = void 0;
 var client_1 = require("@prisma/client");
 var AppError_1 = __importDefault(require("../../../../utils/errors/AppError"));
 var prisma = new client_1.PrismaClient();
-var CreatePassagerUseCase = /** @class */ (function () {
-    function CreatePassagerUseCase() {
+var CreateDriverUseCase = /** @class */ (function () {
+    function CreateDriverUseCase() {
     }
-    CreatePassagerUseCase.prototype.execute = function (_a) {
-        var bith_date = _a.bith_date, cep = _a.cep, address = _a.address, number = _a.number, complement = _a.complement, bairro = _a.bairro, cidade = _a.cidade, linha_interesse = _a.linha_interesse, start_date = _a.start_date, start_point = _a.start_point, end_point = _a.end_point, back_point = _a.back_point, finish_point = _a.finish_point, userId = _a.userId;
+    CreateDriverUseCase.prototype.execute = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var clientExist, formatData, client;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var userExist, driver;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0: return [4 /*yield*/, prisma.user.findFirst({
                             where: {
-                                id: userId
+                                id: data.userId
                             }
                         })];
                     case 1:
-                        clientExist = _b.sent();
-                        if (!clientExist) {
+                        userExist = _a.sent();
+                        if (!userExist) {
                             throw new AppError_1["default"]("user don't exists", 401);
                         }
-                        formatData = {
-                            bith_date: new Date(bith_date),
-                            cep: cep,
-                            address: address,
-                            number: number,
-                            complement: complement,
-                            bairro: bairro,
-                            cidade: cidade,
-                            linha_interesse: linha_interesse,
-                            start_date: new Date(start_date),
-                            start_point: start_point,
-                            end_point: end_point,
-                            back_point: back_point,
-                            finish_point: finish_point,
-                            userId: userId
-                        };
-                        return [4 /*yield*/, prisma.passager.create({
-                                data: formatData
+                        return [4 /*yield*/, prisma.driver.create({
+                                data: data
                             })];
                     case 2:
-                        client = _b.sent();
-                        return [2 /*return*/, client];
+                        driver = _a.sent();
+                        return [2 /*return*/, driver];
                 }
             });
         });
     };
-    return CreatePassagerUseCase;
+    return CreateDriverUseCase;
 }());
-exports.CreatePassagerUseCase = CreatePassagerUseCase;
+exports.CreateDriverUseCase = CreateDriverUseCase;

@@ -35,59 +35,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
-exports.CreatePassagerUseCase = void 0;
-var client_1 = require("@prisma/client");
-var AppError_1 = __importDefault(require("../../../../utils/errors/AppError"));
-var prisma = new client_1.PrismaClient();
-var CreatePassagerUseCase = /** @class */ (function () {
-    function CreatePassagerUseCase() {
+exports.CreateLineController = void 0;
+var CreateLineUseCase_1 = require("../services/createLine/CreateLineUseCase");
+var CreateLineController = /** @class */ (function () {
+    function CreateLineController() {
     }
-    CreatePassagerUseCase.prototype.execute = function (_a) {
-        var bith_date = _a.bith_date, cep = _a.cep, address = _a.address, number = _a.number, complement = _a.complement, bairro = _a.bairro, cidade = _a.cidade, linha_interesse = _a.linha_interesse, start_date = _a.start_date, start_point = _a.start_point, end_point = _a.end_point, back_point = _a.back_point, finish_point = _a.finish_point, userId = _a.userId;
+    CreateLineController.prototype.handle = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var clientExist, formatData, client;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, prisma.user.findFirst({
-                            where: {
-                                id: userId
-                            }
-                        })];
+            var bodyData, createLineUseCase, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        bodyData = req.body;
+                        createLineUseCase = new CreateLineUseCase_1.CreateLineUseCase();
+                        return [4 /*yield*/, createLineUseCase.execute(bodyData)];
                     case 1:
-                        clientExist = _b.sent();
-                        if (!clientExist) {
-                            throw new AppError_1["default"]("user don't exists", 401);
-                        }
-                        formatData = {
-                            bith_date: new Date(bith_date),
-                            cep: cep,
-                            address: address,
-                            number: number,
-                            complement: complement,
-                            bairro: bairro,
-                            cidade: cidade,
-                            linha_interesse: linha_interesse,
-                            start_date: new Date(start_date),
-                            start_point: start_point,
-                            end_point: end_point,
-                            back_point: back_point,
-                            finish_point: finish_point,
-                            userId: userId
-                        };
-                        return [4 /*yield*/, prisma.passager.create({
-                                data: formatData
-                            })];
-                    case 2:
-                        client = _b.sent();
-                        return [2 /*return*/, client];
+                        result = _a.sent();
+                        return [2 /*return*/, res.json(result)];
                 }
             });
         });
     };
-    return CreatePassagerUseCase;
+    return CreateLineController;
 }());
-exports.CreatePassagerUseCase = CreatePassagerUseCase;
+exports.CreateLineController = CreateLineController;

@@ -12,9 +12,10 @@ interface ICreatePassager {
   cidade: string;
   linha_interesse: string;
   start_date: string;
-  start_point: string;
-  end_point: string;
-  back_point: string;
+  start_point?: number;
+  end_point?: number;
+  back_point?: number;
+  finish_point?: number;
   userId: number;
 }
 
@@ -34,6 +35,7 @@ export class CreatePassagerUseCase {
     start_point,
     end_point,
     back_point,
+    finish_point,
     userId,
   }: ICreatePassager) {
     //Validar se usuario existe
@@ -60,11 +62,12 @@ export class CreatePassagerUseCase {
       start_point,
       end_point,
       back_point,
+      finish_point,
       userId,
     };
 
     //Salvar client
-    const client = await prisma.passageiro.create({
+    const client = await prisma.passager.create({
       data: formatData,
     });
 
