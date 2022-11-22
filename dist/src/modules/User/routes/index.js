@@ -6,13 +6,16 @@ var CreateDriverController_1 = require("../services/Driver/createDriver/CreateDr
 var CreatePassagerController_1 = require("../services/Passager/createPassager/CreatePassagerController");
 var CreateUserController_1 = require("../services/createUser/CreateUserController");
 var updatePassagerController_1 = require("../services/Passager/updatePassager/updatePassagerController");
+var GetAllPassagersController_1 = require("../services/Passager/getAllPassagers/GetAllPassagersController");
 var userRoutes = (0, express_1.Router)();
 exports.userRoutes = userRoutes;
 var createUserController = new CreateUserController_1.CreateUserController();
 var createPassagerController = new CreatePassagerController_1.CreatePassagerController();
 var updatePassagerController = new updatePassagerController_1.UpdatePassagerController();
+var getAllPassagersController = new GetAllPassagersController_1.GetAllPassagersController();
 var createDriverController = new CreateDriverController_1.CreateDriverController();
 userRoutes.post("", createUserController.handle);
 userRoutes.post("/passager", createPassagerController.handle);
 userRoutes.put("/passager", updatePassagerController.handle);
+userRoutes.get("/passager", getAllPassagersController.handle);
 userRoutes.post("/driver", createDriverController.handle);
