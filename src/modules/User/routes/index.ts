@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import { CreateDriverController } from "../services/createDriver/CreateDriverController";
-import { CreatePassagerController } from "../services/createPassager/CreatePassagerController";
+import { CreateDriverController } from "../services/Driver/createDriver/CreateDriverController";
+import { CreatePassagerController } from "../services/Passager/createPassager/CreatePassagerController";
 import { CreateUserController } from "../services/createUser/CreateUserController";
-import { UpdatePassagerController } from "../services/updatePassager/updatePassagerController";
+import { UpdatePassagerController } from "../services/Passager/updatePassager/updatePassagerController";
 
 
 const userRoutes = Router();

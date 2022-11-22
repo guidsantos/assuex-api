@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import e from "express";
 
-import AppError from "../../../../utils/errors/AppError";
+import AppError from "../../../../../utils/errors/AppError";
 
 interface IUpdatePassager {
   bith_date: string;
