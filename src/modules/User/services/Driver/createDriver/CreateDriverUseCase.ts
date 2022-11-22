@@ -24,6 +24,16 @@ export class CreateDriverUseCase {
       throw new AppError("user don't exists", 401);
     }
 
+    const driverExists =  await prisma.driver.findFirst({
+      where: {
+        userId: data.userId,
+      },
+    });
+
+    if (driverExists) {
+      throw new AppError("driver already exists", 401);
+    }
+
     //Salvar driver
     const driver = await prisma.driver.create({
       data,
