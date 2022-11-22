@@ -35,52 +35,59 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
 };
 exports.__esModule = true;
-exports.CreateDriverUseCase = void 0;
+exports.GetAllPassagersUseCase = void 0;
 var client_1 = require("@prisma/client");
-var AppError_1 = __importDefault(require("../../../../../utils/errors/AppError"));
 var prisma = new client_1.PrismaClient();
-var CreateDriverUseCase = /** @class */ (function () {
-    function CreateDriverUseCase() {
+var GetAllPassagersUseCase = /** @class */ (function () {
+    function GetAllPassagersUseCase() {
     }
-    CreateDriverUseCase.prototype.execute = function (data) {
+    GetAllPassagersUseCase.prototype.execute = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var userExist, driverExists, driver;
+            var passagers, usersId, users, filterUsers, filterPassagers, responseData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, prisma.user.findFirst({
-                            where: {
-                                id: data.userId
-                            }
-                        })];
+                    case 0: return [4 /*yield*/, prisma.passager.findMany()];
                     case 1:
-                        userExist = _a.sent();
-                        if (!userExist) {
-                            throw new AppError_1["default"]("user don't exists", 401);
-                        }
-                        return [4 /*yield*/, prisma.driver.findFirst({
-                                where: {
-                                    userId: data.userId
-                                }
+                        passagers = _a.sent();
+                        usersId = passagers.map(function (e) { return e.userId; });
+                        return [4 /*yield*/, prisma.user.findMany({
+                                where: { id: { "in": usersId } }
                             })];
                     case 2:
-                        driverExists = _a.sent();
-                        if (driverExists) {
-                            throw new AppError_1["default"]("driver already exists", 401);
-                        }
-                        return [4 /*yield*/, prisma.driver.create({
-                                data: data
-                            })];
-                    case 3:
-                        driver = _a.sent();
-                        return [2 /*return*/, driver];
+                        users = _a.sent();
+                        filterUsers = users.map(function (e) {
+                            var password = e.password, cpf = e.cpf, res = __rest(e, ["password", "cpf"]);
+                            return res;
+                        });
+                        filterPassagers = passagers.map(function (e) {
+                            var userId = e.userId, res = __rest(e, ["userId"]);
+                            return res;
+                        });
+                        responseData = filterUsers.map(function (e, idx) {
+                            var passagerObj = filterPassagers[idx];
+                            var obj = {
+                                userInfo: e,
+                                passagerInfo: passagerObj
+                            };
+                            return obj;
+                        });
+                        return [2 /*return*/, responseData];
                 }
             });
         });
     };
-    return CreateDriverUseCase;
+    return GetAllPassagersUseCase;
 }());
-exports.CreateDriverUseCase = CreateDriverUseCase;
+exports.GetAllPassagersUseCase = GetAllPassagersUseCase;

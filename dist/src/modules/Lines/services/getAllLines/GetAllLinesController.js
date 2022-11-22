@@ -35,52 +35,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
-exports.CreateDriverUseCase = void 0;
-var client_1 = require("@prisma/client");
-var AppError_1 = __importDefault(require("../../../../../utils/errors/AppError"));
-var prisma = new client_1.PrismaClient();
-var CreateDriverUseCase = /** @class */ (function () {
-    function CreateDriverUseCase() {
+exports.GetAllLinesController = void 0;
+var GetAllLinesUseCase_1 = require("./GetAllLinesUseCase");
+var GetAllLinesController = /** @class */ (function () {
+    function GetAllLinesController() {
     }
-    CreateDriverUseCase.prototype.execute = function (data) {
+    GetAllLinesController.prototype.handle = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var userExist, driverExists, driver;
+            var getAllLinesUseCase, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, prisma.user.findFirst({
-                            where: {
-                                id: data.userId
-                            }
-                        })];
+                    case 0:
+                        getAllLinesUseCase = new GetAllLinesUseCase_1.GetAllLinesUseCase();
+                        return [4 /*yield*/, getAllLinesUseCase.execute()];
                     case 1:
-                        userExist = _a.sent();
-                        if (!userExist) {
-                            throw new AppError_1["default"]("user don't exists", 401);
-                        }
-                        return [4 /*yield*/, prisma.driver.findFirst({
-                                where: {
-                                    userId: data.userId
-                                }
-                            })];
-                    case 2:
-                        driverExists = _a.sent();
-                        if (driverExists) {
-                            throw new AppError_1["default"]("driver already exists", 401);
-                        }
-                        return [4 /*yield*/, prisma.driver.create({
-                                data: data
-                            })];
-                    case 3:
-                        driver = _a.sent();
-                        return [2 /*return*/, driver];
+                        result = _a.sent();
+                        return [2 /*return*/, res.json(result)];
                 }
             });
         });
     };
-    return CreateDriverUseCase;
+    return GetAllLinesController;
 }());
-exports.CreateDriverUseCase = CreateDriverUseCase;
+exports.GetAllLinesController = GetAllLinesController;
