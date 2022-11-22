@@ -86,7 +86,7 @@ var GetAllLinesUseCase = /** @class */ (function () {
                         driverNames = _a.sent();
                         filterDriversInfo = driversInfo.map(function (e, idx) {
                             var name = driverNames[idx].name;
-                            var cnh = e.cnh, userId = e.userId, res = __rest(e, ["cnh", "userId"]);
+                            var cnh = e.cnh, userId = e.userId, id = e.id, res = __rest(e, ["cnh", "userId", "id"]);
                             return __assign({ name: name }, res);
                         });
                         linesId = Array.from(new Set(lines.map(function (e) { return e.id; })));
@@ -112,10 +112,14 @@ var GetAllLinesUseCase = /** @class */ (function () {
                         });
                         responseData = lines.map(function (e, idx) {
                             var lineStopPointsInfo = linesStopPointsInfo.filter(function (i) { return i.lineId === e.id; });
+                            var filterLineStopInfo = lineStopPointsInfo.map(function (e) {
+                                var lineId = e.lineId, res = __rest(e, ["lineId"]);
+                                return res;
+                            });
                             return {
                                 lineName: e.name,
                                 driver: filterDriversInfo[idx],
-                                stopPoints: lineStopPointsInfo
+                                stopPoints: filterLineStopInfo
                             };
                         });
                         return [2 /*return*/, responseData];
