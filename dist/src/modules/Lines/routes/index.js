@@ -1,0 +1,15 @@
+"use strict";
+exports.__esModule = true;
+exports.lineRoutes = void 0;
+var express_1 = require("express");
+var CreateLineStopController_1 = require("../services/addLineStopPoints/CreateLineStopController");
+var CreateLineController_1 = require("../services/createLine/CreateLineController");
+var CreateStopPointController_1 = require("../services/createStopPoint/CreateStopPointController");
+var lineRoutes = (0, express_1.Router)();
+exports.lineRoutes = lineRoutes;
+var createLineController = new CreateLineController_1.CreateLineController();
+var createStopPointController = new CreateStopPointController_1.CreateStopPointController();
+var createLineStopController = new CreateLineStopController_1.CreateLineStopController();
+lineRoutes.post("", createLineController.handle);
+lineRoutes.post("/stop-point", createStopPointController.handle);
+lineRoutes.post("/stops", createLineStopController.handle);

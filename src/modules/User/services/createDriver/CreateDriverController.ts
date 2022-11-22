@@ -1,5 +1,5 @@
 import { Request, response, Response } from "express";
-import { CreateDriverUseCase } from "../services/createDriver/CreateDriverUseCase";
+import { CreateDriverUseCase } from "./CreateDriverUseCase";
 
 export class CreateDriverController {
   async handle(req: Request, res: Response) {

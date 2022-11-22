@@ -1,5 +1,5 @@
 import { Request, response, Response } from "express";
-import { CreateLineUseCase } from "../services/createLine/CreateLineUseCase";
+import { CreateLineUseCase } from "./CreateLineUseCase";
 
 export class CreateLineController {
   async handle(req: Request, res: Response) {

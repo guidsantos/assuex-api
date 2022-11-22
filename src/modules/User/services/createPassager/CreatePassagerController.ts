@@ -1,5 +1,5 @@
 import { Request, response, Response } from "express";
-import { CreatePassagerUseCase } from "../services/createPassager/CreatePassagerUseCase";
+import { CreatePassagerUseCase } from "./CreatePassagerUseCase";
 
 export class CreatePassagerController {
   async handle(req: Request, res: Response) {

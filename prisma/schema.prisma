@@ -33,25 +33,25 @@ model Passager {
   cidade              String
   linha_interesse     String
   start_date          DateTime
-  passagerStartPoint  LineStopPoints?  @relation("passagerStartPoint", fields: [start_point], references: [id])
-  start_point         Int?            
-  passagerEndPoint    LineStopPoints?  @relation("passagerEndPoint", fields: [end_point], references: [id])
+  passagerStartPoint  LineStopPoints? @relation("passagerStartPoint", fields: [start_point], references: [id])
+  start_point         Int?
+  passagerEndPoint    LineStopPoints? @relation("passagerEndPoint", fields: [end_point], references: [id])
   end_point           Int?
-  passagerBackPoint   LineStopPoints?  @relation("passagerBackPoint", fields: [back_point], references: [id])
+  passagerBackPoint   LineStopPoints? @relation("passagerBackPoint", fields: [back_point], references: [id])
   back_point          Int?
-  passagerFinishPoint LineStopPoints?  @relation("passagerFinishPoint", fields: [finish_point], references: [id])
+  passagerFinishPoint LineStopPoints? @relation("passagerFinishPoint", fields: [finish_point], references: [id])
   finish_point        Int?
   user                User            @relation(fields: [userId], references: [id])
   userId              Int             @unique
 }
 
 model Driver {
-  id         Int        @id @default(autoincrement())
-  company    String
-  cnh        String
-  user       User       @relation(fields: [userId], references: [id])
-  userId     Int        @unique
-  Line       Line?
+  id      Int    @id @default(autoincrement())
+  company String
+  cnh     String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  Int    @unique
+  Line    Line?
 }
 
 model Line {
@@ -65,6 +65,7 @@ model Line {
 model StopPoint {
   id             Int              @id @default(autoincrement())
   address        String
+  reference      String?
   LineStopPoints LineStopPoints[]
 }
 
@@ -75,7 +76,6 @@ model LineStopPoints {
   stopPoint           StopPoint  @relation(fields: [stopPointId], references: [id])
   stopPointId         Int
   stop_time           String
-  passagerId          Int?
   passagerStartPoint  Passager[] @relation("passagerStartPoint")
   passagerEndPoint    Passager[] @relation("passagerEndPoint")
   passagerBackPoint   Passager[] @relation("passagerBackPoint")

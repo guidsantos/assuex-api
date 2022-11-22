@@ -2,10 +2,9 @@ import "dotenv/config";
 import "express-async-errors";
 
 import express, { NextFunction, Request, Response } from "express";
-import { routes } from "./routes";
 import AppError from "./utils/errors/AppError";
 import cors from "cors";
-
+import { routes } from "./routes";
 const app = express();
 
 app.use(cors());
