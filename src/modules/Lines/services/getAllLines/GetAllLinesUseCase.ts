@@ -20,7 +20,7 @@ export class GetAllLinesUseCase {
 
     const filterDriversInfo = driversInfo.map((e, idx) => {
       const name = driverNames[idx].name;
-      const { cnh, userId, ...res } = e;
+      const { cnh, userId, id, ...res } = e;
       return { name, ...res };
     });
 
@@ -52,10 +52,15 @@ export class GetAllLinesUseCase {
         (i) => i.lineId === e.id
       );
 
+      const filterLineStopInfo = lineStopPointsInfo.map((e) => {
+        const { lineId, ...res } = e;
+        return res;
+      });
+
       return {
         lineName: e.name,
         driver: filterDriversInfo[idx],
-        stopPoints: lineStopPointsInfo,
+        stopPoints: filterLineStopInfo,
       };
     });
 
