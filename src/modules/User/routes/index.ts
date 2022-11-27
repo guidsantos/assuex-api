@@ -3,7 +3,7 @@ import { Router } from "express";
 import { CreateDriverController } from "../services/Driver/createDriver/CreateDriverController";
 import { CreatePassagerController } from "../services/Passager/createPassager/CreatePassagerController";
 import { CreateUserController } from "../services/User/createUser/CreateUserController";
-import { UpdatePassagerController } from "../services/Passager/updatePassager/updatePassagerController";
+import { UpdatePassagerController } from "../services/Passager/updatePassager/UpdatePassagerController";
 import { GetAllPassagersController } from "../services/Passager/getAllPassagers/GetAllPassagersController";
 import { UpdateDriverController } from "../services/Driver/updateDriver/UpdateDriverController";
 
