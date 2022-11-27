@@ -13,6 +13,7 @@ var app = (0, express_1["default"])();
 app.use((0, cors_1["default"])());
 app.use(express_1["default"].json());
 app.use(routes_1.routes);
+app.get("/", function (req, res) { return res.send("Works"); });
 app.use(function (err, request, response, _) {
     if (err instanceof AppError_1["default"]) {
         return response
