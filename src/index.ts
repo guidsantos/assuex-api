@@ -29,6 +29,8 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
     .json({ status: "error", message: "Internal server error" });
 });
 
-app.listen(3333, () => {
-  console.log("App listening on port 3333");
+const PORT = process.env.PORT ?? 3333
+
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
 });

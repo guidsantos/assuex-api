@@ -2,6 +2,7 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a;
 exports.__esModule = true;
 require("dotenv/config");
 require("express-async-errors");
@@ -25,6 +26,7 @@ app.use(function (err, request, response, _) {
         .status(500)
         .json({ status: "error", message: "Internal server error" });
 });
-app.listen(3333, function () {
-    console.log("App listening on port 3333");
+var PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3333;
+app.listen(PORT, function () {
+    console.log("App listening on port ".concat(PORT));
 });
