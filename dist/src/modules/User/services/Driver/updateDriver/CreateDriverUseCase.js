@@ -39,77 +39,48 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.UpdatePassagerUseCase = void 0;
+exports.CreateDriverUseCase = void 0;
 var client_1 = require("@prisma/client");
 var AppError_1 = __importDefault(require("../../../../../utils/errors/AppError"));
 var prisma = new client_1.PrismaClient();
-var UpdatePassagerUseCase = /** @class */ (function () {
-    function UpdatePassagerUseCase() {
+var CreateDriverUseCase = /** @class */ (function () {
+    function CreateDriverUseCase() {
     }
-    UpdatePassagerUseCase.prototype.execute = function (data) {
+    CreateDriverUseCase.prototype.execute = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var passagerExist, arrPoints, pointsExists, formatData, passager;
+            var userExist, driverExists, driver;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, prisma.passager.findFirst({
+                    case 0: return [4 /*yield*/, prisma.user.findFirst({
                             where: {
-                                id: data.id
+                                id: data.userId
                             }
                         })];
                     case 1:
-                        passagerExist = _a.sent();
-                        if (!passagerExist) {
-                            throw new AppError_1["default"]("passager don't exists", 401);
+                        userExist = _a.sent();
+                        if (!userExist) {
+                            throw new AppError_1["default"]("user don't exists", 401);
                         }
-                        arrPoints = [
-                            data.start_point || 0,
-                            data.end_point || 0,
-                            data.back_point || 0,
-                            data.finish_point || 0,
-                        ];
-                        arrPoints = arrPoints.filter(function (e) {
-                            return e !== 0;
-                        });
-                        return [4 /*yield*/, prisma.lineStopPoints.findMany({
+                        return [4 /*yield*/, prisma.driver.findFirst({
                                 where: {
-                                    id: { "in": arrPoints }
+                                    userId: data.userId
                                 }
                             })];
                     case 2:
-                        pointsExists = _a.sent();
-                        if (arrPoints.length !== pointsExists.length) {
-                            throw new AppError_1["default"]("point don't exists", 401);
+                        driverExists = _a.sent();
+                        if (driverExists) {
+                            throw new AppError_1["default"]("driver already exists", 401);
                         }
-                        if (new Set(arrPoints).size !== arrPoints.length) {
-                            throw new AppError_1["default"]("point are duplicates", 401);
-                        }
-                        formatData = {
-                            bith_date: !!data.bith_date ? new Date(data.bith_date) : undefined,
-                            cep: data.cep,
-                            address: data.address,
-                            number: data.number,
-                            complement: data.complement,
-                            bairro: data.bairro,
-                            cidade: data.cidade,
-                            linha_interesse: data.linha_interesse,
-                            start_point: data.start_point,
-                            end_point: data.end_point,
-                            back_point: data.back_point,
-                            finish_point: data.finish_point
-                        };
-                        return [4 /*yield*/, prisma.passager.update({
-                                where: {
-                                    id: data.id
-                                },
-                                data: formatData
+                        return [4 /*yield*/, prisma.driver.create({
+                                data: data
                             })];
                     case 3:
-                        passager = _a.sent();
-                        return [2 /*return*/, passager];
+                        driver = _a.sent();
+                        return [2 /*return*/, driver];
                 }
             });
         });
     };
-    return UpdatePassagerUseCase;
+    return CreateDriverUseCase;
 }());
-exports.UpdatePassagerUseCase = UpdatePassagerUseCase;
+exports.CreateDriverUseCase = CreateDriverUseCase;

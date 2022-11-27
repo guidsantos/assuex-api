@@ -39,77 +39,55 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.UpdatePassagerUseCase = void 0;
+exports.CreateUserUseCase = void 0;
 var client_1 = require("@prisma/client");
+var bcrypt_1 = require("bcrypt");
 var AppError_1 = __importDefault(require("../../../../../utils/errors/AppError"));
 var prisma = new client_1.PrismaClient();
-var UpdatePassagerUseCase = /** @class */ (function () {
-    function UpdatePassagerUseCase() {
+var CreateUserUseCase = /** @class */ (function () {
+    function CreateUserUseCase() {
     }
-    UpdatePassagerUseCase.prototype.execute = function (data) {
+    CreateUserUseCase.prototype.execute = function (bodyData) {
         return __awaiter(this, void 0, void 0, function () {
-            var passagerExist, arrPoints, pointsExists, formatData, passager;
+            var clientExist, hashPassword, data, client, responseClient;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, prisma.passager.findFirst({
+                    case 0: return [4 /*yield*/, prisma.user.findFirst({
                             where: {
-                                id: data.id
+                                email: bodyData.email
                             }
                         })];
                     case 1:
-                        passagerExist = _a.sent();
-                        if (!passagerExist) {
-                            throw new AppError_1["default"]("passager don't exists", 401);
+                        clientExist = _a.sent();
+                        if (clientExist) {
+                            throw new AppError_1["default"]("user already exists", 401);
                         }
-                        arrPoints = [
-                            data.start_point || 0,
-                            data.end_point || 0,
-                            data.back_point || 0,
-                            data.finish_point || 0,
-                        ];
-                        arrPoints = arrPoints.filter(function (e) {
-                            return e !== 0;
-                        });
-                        return [4 /*yield*/, prisma.lineStopPoints.findMany({
-                                where: {
-                                    id: { "in": arrPoints }
-                                }
-                            })];
+                        return [4 /*yield*/, (0, bcrypt_1.hash)(bodyData.password, 10)];
                     case 2:
-                        pointsExists = _a.sent();
-                        if (arrPoints.length !== pointsExists.length) {
-                            throw new AppError_1["default"]("point don't exists", 401);
-                        }
-                        if (new Set(arrPoints).size !== arrPoints.length) {
-                            throw new AppError_1["default"]("point are duplicates", 401);
-                        }
-                        formatData = {
-                            bith_date: !!data.bith_date ? new Date(data.bith_date) : undefined,
-                            cep: data.cep,
-                            address: data.address,
-                            number: data.number,
-                            complement: data.complement,
-                            bairro: data.bairro,
-                            cidade: data.cidade,
-                            linha_interesse: data.linha_interesse,
-                            start_point: data.start_point,
-                            end_point: data.end_point,
-                            back_point: data.back_point,
-                            finish_point: data.finish_point
+                        hashPassword = _a.sent();
+                        data = {
+                            name: bodyData.name,
+                            email: bodyData.email,
+                            last_name: bodyData.last_name,
+                            cpf: bodyData.cpf,
+                            phone: bodyData.phone,
+                            password: hashPassword
                         };
-                        return [4 /*yield*/, prisma.passager.update({
-                                where: {
-                                    id: data.id
-                                },
-                                data: formatData
+                        return [4 /*yield*/, prisma.user.create({
+                                data: data
                             })];
                     case 3:
-                        passager = _a.sent();
-                        return [2 /*return*/, passager];
+                        client = _a.sent();
+                        responseClient = {
+                            id: client.id,
+                            name: client.name + " " + client.last_name,
+                            email: client.email
+                        };
+                        return [2 /*return*/, responseClient];
                 }
             });
         });
     };
-    return UpdatePassagerUseCase;
+    return CreateUserUseCase;
 }());
-exports.UpdatePassagerUseCase = UpdatePassagerUseCase;
+exports.CreateUserUseCase = CreateUserUseCase;

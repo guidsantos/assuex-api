@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 import { hash } from "bcrypt";
 import { response } from "express";
-import AppError from "../../../../utils/errors/AppError";
+import AppError from "../../../../../utils/errors/AppError";
 
 interface ICreateClient {
   name: string;

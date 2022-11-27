@@ -39,77 +39,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.UpdatePassagerUseCase = void 0;
+exports.UpdateLineStopPointUseCase = void 0;
 var client_1 = require("@prisma/client");
-var AppError_1 = __importDefault(require("../../../../../utils/errors/AppError"));
+var AppError_1 = __importDefault(require("../../../../utils/errors/AppError"));
 var prisma = new client_1.PrismaClient();
-var UpdatePassagerUseCase = /** @class */ (function () {
-    function UpdatePassagerUseCase() {
+var UpdateLineStopPointUseCase = /** @class */ (function () {
+    function UpdateLineStopPointUseCase() {
     }
-    UpdatePassagerUseCase.prototype.execute = function (data) {
+    UpdateLineStopPointUseCase.prototype.execute = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var passagerExist, arrPoints, pointsExists, formatData, passager;
+            var stopPointExist, lineExist, lineStopPointExist, stopPoint;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, prisma.passager.findFirst({
+                    case 0: return [4 /*yield*/, prisma.stopPoint.findFirst({
                             where: {
-                                id: data.id
+                                id: data.stopPointId
                             }
                         })];
                     case 1:
-                        passagerExist = _a.sent();
-                        if (!passagerExist) {
-                            throw new AppError_1["default"]("passager don't exists", 401);
-                        }
-                        arrPoints = [
-                            data.start_point || 0,
-                            data.end_point || 0,
-                            data.back_point || 0,
-                            data.finish_point || 0,
-                        ];
-                        arrPoints = arrPoints.filter(function (e) {
-                            return e !== 0;
-                        });
-                        return [4 /*yield*/, prisma.lineStopPoints.findMany({
+                        stopPointExist = _a.sent();
+                        return [4 /*yield*/, prisma.line.findFirst({
                                 where: {
-                                    id: { "in": arrPoints }
+                                    id: data.lineId
                                 }
                             })];
                     case 2:
-                        pointsExists = _a.sent();
-                        if (arrPoints.length !== pointsExists.length) {
-                            throw new AppError_1["default"]("point don't exists", 401);
+                        lineExist = _a.sent();
+                        if (!stopPointExist) {
+                            throw new AppError_1["default"]("stop point dont exists", 401);
                         }
-                        if (new Set(arrPoints).size !== arrPoints.length) {
-                            throw new AppError_1["default"]("point are duplicates", 401);
+                        if (!lineExist) {
+                            throw new AppError_1["default"]("line dont exists", 401);
                         }
-                        formatData = {
-                            bith_date: !!data.bith_date ? new Date(data.bith_date) : undefined,
-                            cep: data.cep,
-                            address: data.address,
-                            number: data.number,
-                            complement: data.complement,
-                            bairro: data.bairro,
-                            cidade: data.cidade,
-                            linha_interesse: data.linha_interesse,
-                            start_point: data.start_point,
-                            end_point: data.end_point,
-                            back_point: data.back_point,
-                            finish_point: data.finish_point
-                        };
-                        return [4 /*yield*/, prisma.passager.update({
+                        return [4 /*yield*/, prisma.lineStopPoints.findFirst({
                                 where: {
-                                    id: data.id
-                                },
-                                data: formatData
+                                    lineId: data.lineId,
+                                    stopPointId: data.stopPointId,
+                                    stop_time: data.stop_time
+                                }
                             })];
                     case 3:
-                        passager = _a.sent();
-                        return [2 /*return*/, passager];
+                        lineStopPointExist = _a.sent();
+                        if (lineStopPointExist) {
+                            throw new AppError_1["default"]("line stop already exists", 401);
+                        }
+                        return [4 /*yield*/, prisma.lineStopPoints.create({
+                                data: data
+                            })];
+                    case 4:
+                        stopPoint = _a.sent();
+                        return [2 /*return*/, stopPoint];
                 }
             });
         });
     };
-    return UpdatePassagerUseCase;
+    return UpdateLineStopPointUseCase;
 }());
-exports.UpdatePassagerUseCase = UpdatePassagerUseCase;
+exports.UpdateLineStopPointUseCase = UpdateLineStopPointUseCase;

@@ -39,77 +39,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.UpdatePassagerUseCase = void 0;
+exports.CreateStopPointUseCase = void 0;
 var client_1 = require("@prisma/client");
 var AppError_1 = __importDefault(require("../../../../../utils/errors/AppError"));
 var prisma = new client_1.PrismaClient();
-var UpdatePassagerUseCase = /** @class */ (function () {
-    function UpdatePassagerUseCase() {
+var CreateStopPointUseCase = /** @class */ (function () {
+    function CreateStopPointUseCase() {
     }
-    UpdatePassagerUseCase.prototype.execute = function (data) {
+    CreateStopPointUseCase.prototype.execute = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var passagerExist, arrPoints, pointsExists, formatData, passager;
+            var stopPointExist, stopPoint;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, prisma.passager.findFirst({
+                    case 0: return [4 /*yield*/, prisma.stopPoint.findFirst({
                             where: {
-                                id: data.id
+                                address: data.address
                             }
                         })];
                     case 1:
-                        passagerExist = _a.sent();
-                        if (!passagerExist) {
-                            throw new AppError_1["default"]("passager don't exists", 401);
+                        stopPointExist = _a.sent();
+                        if (stopPointExist) {
+                            throw new AppError_1["default"]("stop point already exists", 401);
                         }
-                        arrPoints = [
-                            data.start_point || 0,
-                            data.end_point || 0,
-                            data.back_point || 0,
-                            data.finish_point || 0,
-                        ];
-                        arrPoints = arrPoints.filter(function (e) {
-                            return e !== 0;
-                        });
-                        return [4 /*yield*/, prisma.lineStopPoints.findMany({
-                                where: {
-                                    id: { "in": arrPoints }
-                                }
+                        return [4 /*yield*/, prisma.stopPoint.create({
+                                data: data
                             })];
                     case 2:
-                        pointsExists = _a.sent();
-                        if (arrPoints.length !== pointsExists.length) {
-                            throw new AppError_1["default"]("point don't exists", 401);
-                        }
-                        if (new Set(arrPoints).size !== arrPoints.length) {
-                            throw new AppError_1["default"]("point are duplicates", 401);
-                        }
-                        formatData = {
-                            bith_date: !!data.bith_date ? new Date(data.bith_date) : undefined,
-                            cep: data.cep,
-                            address: data.address,
-                            number: data.number,
-                            complement: data.complement,
-                            bairro: data.bairro,
-                            cidade: data.cidade,
-                            linha_interesse: data.linha_interesse,
-                            start_point: data.start_point,
-                            end_point: data.end_point,
-                            back_point: data.back_point,
-                            finish_point: data.finish_point
-                        };
-                        return [4 /*yield*/, prisma.passager.update({
-                                where: {
-                                    id: data.id
-                                },
-                                data: formatData
-                            })];
-                    case 3:
-                        passager = _a.sent();
-                        return [2 /*return*/, passager];
+                        stopPoint = _a.sent();
+                        return [2 /*return*/, stopPoint];
                 }
             });
         });
     };
-    return UpdatePassagerUseCase;
+    return CreateStopPointUseCase;
 }());
-exports.UpdatePassagerUseCase = UpdatePassagerUseCase;
+exports.CreateStopPointUseCase = CreateStopPointUseCase;

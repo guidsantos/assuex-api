@@ -4,7 +4,7 @@ import e from "express";
 import AppError from "../../../../../utils/errors/AppError";
 
 interface IUpdatePassager {
-  bith_date: string;
+  bith_date?: string;
   cep?: string;
   address?: string;
   number?: number;
@@ -60,7 +60,7 @@ export class UpdatePassagerUseCase {
     }
 
     const formatData = {
-      bith_date: new Date(data.bith_date),
+      bith_date: !!data.bith_date ? new Date(data.bith_date) : undefined,
       cep: data.cep,
       address: data.address,
       number: data.number,

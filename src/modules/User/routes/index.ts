@@ -2,9 +2,10 @@ import { Router } from "express";
 
 import { CreateDriverController } from "../services/Driver/createDriver/CreateDriverController";
 import { CreatePassagerController } from "../services/Passager/createPassager/CreatePassagerController";
-import { CreateUserController } from "../services/createUser/CreateUserController";
+import { CreateUserController } from "../services/User/createUser/CreateUserController";
 import { UpdatePassagerController } from "../services/Passager/updatePassager/updatePassagerController";
 import { GetAllPassagersController } from "../services/Passager/getAllPassagers/GetAllPassagersController";
+import { UpdateDriverController } from "../services/Driver/updateDriver/UpdateDriverController";
 
 
 const userRoutes = Router();
@@ -16,6 +17,8 @@ const updatePassagerController = new UpdatePassagerController();
 const getAllPassagersController = new GetAllPassagersController();
 
 const createDriverController = new CreateDriverController();
+const updateDriverController = new UpdateDriverController();
+
 
 userRoutes.post("", createUserController.handle);
 
@@ -24,6 +27,6 @@ userRoutes.put("/passager", updatePassagerController.handle);
 userRoutes.get("/passager", getAllPassagersController.handle)
 
 userRoutes.post("/driver", createDriverController.handle);
-
+userRoutes.put("/driver", updateDriverController.handle);
 
 export { userRoutes };

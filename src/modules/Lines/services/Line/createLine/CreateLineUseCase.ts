@@ -1,11 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 
-import AppError from "../../../../utils/errors/AppError";
+import AppError from "../../../../../utils/errors/AppError";
 
 interface ICreateLine {
   name: string;
-  start_point: string;
-  end_point: string;
   driverId: number;
 }
 

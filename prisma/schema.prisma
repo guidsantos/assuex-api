@@ -81,3 +81,10 @@ model LineStopPoints {
   passagerBackPoint   Passager[] @relation("passagerBackPoint")
   passagerFinishPoint Passager[] @relation("passagerFinishPoint")
 }
+
+model QRCode {
+  id             Int              @id @default(autoincrement())
+  token        String
+  end_date DateTime
+  created_at DateTime
+}

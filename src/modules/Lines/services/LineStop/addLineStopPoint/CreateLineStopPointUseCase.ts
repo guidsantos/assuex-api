@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-import AppError from "../../../../utils/errors/AppError";
+import AppError from "../../../../../utils/errors/AppError";
 
 interface ICreateStopPoint {
   stopPointId: number;
@@ -10,7 +10,7 @@ interface ICreateStopPoint {
 
 const prisma = new PrismaClient();
 
-export class CreateLineStopUseCase {
+export class CreateLineStopPointUseCase {
   async execute(data: ICreateStopPoint) {
     //Validar se a ponto de parada existe
     const stopPointExist = await prisma.stopPoint.findFirst({
