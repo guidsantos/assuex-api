@@ -20,6 +20,7 @@ model User {
   phone      String
   Passageiro Passager?
   Driver     Driver?
+  QRCode     QRCode?
 }
 
 model Passager {
@@ -83,8 +84,11 @@ model LineStopPoints {
 }
 
 model QRCode {
-  id             Int              @id @default(autoincrement())
-  token        String
-  end_date DateTime
-  created_at DateTime
+  id         Int      @id @default(autoincrement())
+  token      String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int      @unique
+  end_date   DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

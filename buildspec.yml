@@ -5,6 +5,7 @@ phases:
     commands:
       - echo Install packages...
       - npm install
+      - npx prisma migrate dev
   build:
     commands:
       - echo Create build ...
