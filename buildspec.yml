@@ -19,6 +19,5 @@ artifacts:
   files:
     - '**/*'  
 env:
-  secrets-manager:
-    DB_PASSWORD: "assuexdburl2:assuexdburl"
-    DB_USER: "assuexdburl2:assuexdburl2"
+  variables:
+    DATABASE_URL: "postgresql://assuexadm:H6ADBBxFiC1G$DCn@assuexdb.czqsacyr07b9.us-east-1.rds.amazonaws.com"
