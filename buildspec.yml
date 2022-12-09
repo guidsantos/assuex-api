@@ -18,3 +18,7 @@ artifacts:
   base-directory: '.'
   files:
     - '**/*'  
+env:
+  secrets-manager:
+    DB_PASSWORD: "assuexdburl:secretdbassuex"
+    DB_USER: "assuexdburl:assuexdb"
