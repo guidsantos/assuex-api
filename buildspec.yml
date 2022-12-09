@@ -20,5 +20,5 @@ artifacts:
     - '**/*'  
 env:
   secrets-manager:
-    DB_PASSWORD: "assuexdburl:secretdbassuex"
-    DB_USER: "assuexdburl:assuexdb"
+    DB_PASSWORD: "assuexdburl2:assuexdburl"
+    DB_USER: "assuexdburl2:assuexdburl2"
