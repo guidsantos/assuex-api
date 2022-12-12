@@ -49,7 +49,7 @@ export class CreateUserUseCase {
       name: client.name+" "+client.last_name,
       email: client.email,
     };
-
+    
     return responseClient;
   }
 }

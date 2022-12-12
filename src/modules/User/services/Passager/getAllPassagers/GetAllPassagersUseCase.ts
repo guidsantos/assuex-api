@@ -21,7 +21,7 @@ export class GetAllPassagersUseCase {
     });
 
     const filterPassagers = passagers.map((e) => {
-      const {userId,...res } = e;
+      const { userId, ...res } = e;
       return res;
     });
 
