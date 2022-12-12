@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  name       String
+  last_name  String
+  password   String
+  cpf        String    @unique
+  phone      String
+  type       String? 
+  Passageiro Passager?
+  Driver     Driver?
+  QRCode     QRCode?
+}
+
+model Passager {
+  id                  Int             @id @default(autoincrement())
+  bith_date           DateTime
+  cep                 String
+  address             String
+  number              Int
+  complement          String
+  bairro              String
+  cidade              String
+  linha_interesse     String
+  start_date          DateTime
+  passagerStartPoint  LineStopPoints? @relation("passagerStartPoint", fields: [start_point], references: [id])
+  start_point         Int?
+  passagerEndPoint    LineStopPoints? @relation("passagerEndPoint", fields: [end_point], references: [id])
+  end_point           Int?
+  passagerBackPoint   LineStopPoints? @relation("passagerBackPoint", fields: [back_point], references: [id])
+  back_point          Int?
+  passagerFinishPoint LineStopPoints? @relation("passagerFinishPoint", fields: [finish_point], references: [id])
+  finish_point        Int?
+  user                User            @relation(fields: [userId], references: [id])
+  userId              Int             @unique
+}
+
+model Driver {
+  id      Int    @id @default(autoincrement())
+  company String
+  cnh     String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  Int    @unique
+  Line    Line?
+}
+
+model Line {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
+  driver         Driver           @relation(fields: [driverId], references: [id])
+  driverId       Int              @unique
+  LineStopPoints LineStopPoints[]
+}
+
+model StopPoint {
+  id             Int              @id @default(autoincrement())
+  address        String
+  reference      String?
+  LineStopPoints LineStopPoints[]
+}
+
+model LineStopPoints {
+  id                  Int        @id @default(autoincrement())
+  line                Line       @relation(fields: [lineId], references: [id])
+  lineId              Int
+  stopPoint           StopPoint  @relation(fields: [stopPointId], references: [id])
+  stopPointId         Int
+  stop_time           String
+  passagerStartPoint  Passager[] @relation("passagerStartPoint")
+  passagerEndPoint    Passager[] @relation("passagerEndPoint")
+  passagerBackPoint   Passager[] @relation("passagerBackPoint")
+  passagerFinishPoint Passager[] @relation("passagerFinishPoint")
+}
+
+model QRCode {
+  id         Int      @id @default(autoincrement())
+  token      String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int      @unique
+  end_date   DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
