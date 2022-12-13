@@ -71,10 +71,18 @@ var CreateDriverUseCase = /** @class */ (function () {
                         if (driverExists) {
                             throw new AppError_1["default"]("driver already exists", 401);
                         }
+                        return [4 /*yield*/, prisma.user.update({
+                                where: { id: userExist.id },
+                                data: {
+                                    type: "DRIVER"
+                                }
+                            })];
+                    case 3:
+                        _a.sent();
                         return [4 /*yield*/, prisma.driver.create({
                                 data: data
                             })];
-                    case 3:
+                    case 4:
                         driver = _a.sent();
                         return [2 /*return*/, driver];
                 }
