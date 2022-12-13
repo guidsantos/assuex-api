@@ -5,7 +5,11 @@ import AppError from "../../../../../utils/errors/AppError";
 interface IUpdateLine {
   id: number;
   name?: string;
+  coordName?: string;
   driverId?: number;
+  startPoint?: string;
+  endPoint?: string;
+  bus?: string;
 }
 
 const prisma = new PrismaClient();
@@ -22,8 +26,6 @@ export class UpdateLineUseCase {
     if (!lineExist) {
       throw new AppError("line dont exists", 401);
     }
-
-
 
     //Salvar linha
     const line = await prisma.line.update({

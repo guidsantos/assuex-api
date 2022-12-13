@@ -18,7 +18,7 @@ model User {
   password   String
   cpf        String    @unique
   phone      String
-  type       String? 
+  type       String?
   Passageiro Passager?
   Driver     Driver?
   QRCode     QRCode?
@@ -59,6 +59,10 @@ model Driver {
 model Line {
   id             Int              @id @default(autoincrement())
   name           String           @unique
+  coordName      String
+  startPoint     String?
+  endPoint       String?
+  bus            String?
   driver         Driver           @relation(fields: [driverId], references: [id])
   driverId       Int              @unique
   LineStopPoints LineStopPoints[]

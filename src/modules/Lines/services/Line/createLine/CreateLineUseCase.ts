@@ -5,6 +5,10 @@ import AppError from "../../../../../utils/errors/AppError";
 interface ICreateLine {
   name: string;
   driverId: number;
+  coordName: string;
+  startPoint?: string;
+  endPoint?: string;
+  bus?: string;
 }
 
 const prisma = new PrismaClient();

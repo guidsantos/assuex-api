@@ -58,7 +58,13 @@ export class GetAllLinesUseCase {
       });
 
       return {
-        lineName: e.name,
+        id: e.id,
+        name: e.name,
+        coordName: e.coordName,
+        startPoint: e.startPoint,
+        endPoint: e.endPoint,
+        bus: e.bus,
+        driverId: e.driverId,
         driver: filterDriversInfo[idx],
         stopPoints: filterLineStopInfo,
       };
