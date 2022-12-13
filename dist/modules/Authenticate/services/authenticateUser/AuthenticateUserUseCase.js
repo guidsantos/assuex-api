@@ -76,7 +76,12 @@ var AuthenticateUserUseCase = /** @class */ (function () {
                             subject: String(bodyUser.id),
                             expiresIn: expiresIn
                         });
-                        user = { id: bodyUser.id, name: bodyUser.name + " " + bodyUser.last_name, email: bodyUser.email };
+                        user = {
+                            id: bodyUser.id,
+                            name: bodyUser.name + " " + bodyUser.last_name,
+                            email: bodyUser.email,
+                            type: bodyUser.type
+                        };
                         return [2 /*return*/, {
                                 user: user,
                                 token: token

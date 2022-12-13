@@ -40,7 +40,12 @@ export class AuthenticateUserUseCase {
       expiresIn,
     });
 
-    const user = { id: bodyUser.id, name: bodyUser.name+" "+bodyUser.last_name, email: bodyUser.email };
+    const user = {
+      id: bodyUser.id,
+      name: bodyUser.name + " " + bodyUser.last_name,
+      email: bodyUser.email,
+      type: bodyUser.type,
+    };
 
     return {
       user,

@@ -6,11 +6,14 @@ import { CreateUserController } from "../services/User/createUser/CreateUserCont
 import { UpdatePassagerController } from "../services/Passager/updatePassager/UpdatePassagerController";
 import { GetAllPassagersController } from "../services/Passager/getAllPassagers/GetAllPassagersController";
 import { UpdateDriverController } from "../services/Driver/updateDriver/UpdateDriverController";
+import { UpdateUserController } from "../services/User/updateUsar/UpdateUserController";
 
 
 const userRoutes = Router();
 
 const createUserController = new CreateUserController();
+const updateUserController = new UpdateUserController()
+
 
 const createPassagerController = new CreatePassagerController();
 const updatePassagerController = new UpdatePassagerController();
@@ -21,6 +24,7 @@ const updateDriverController = new UpdateDriverController();
 
 
 userRoutes.post("", createUserController.handle);
+userRoutes.put("",updateUserController.handle)
 
 userRoutes.post("/passager", createPassagerController.handle);
 userRoutes.put("/passager", updatePassagerController.handle);
