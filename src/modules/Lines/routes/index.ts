@@ -6,12 +6,14 @@ import { DeleteLineStopPointController } from "../services/LineStop/deleteLineSt
 import { GetAllLinesController } from "../services/Line/getAllLines/GetAllLinesController";
 import { UpdateLineStopPointController } from "../services/LineStop/updateLineStopPoint/UpdateLineStopPointController";
 import { UpdateLineController } from "../services/Line/updateLine/UpdateLineController";
+import { GetLineByIdController } from "../services/Line/getLineById/GetLineByIdController";
 
 const lineRoutes = Router();
 
 const createLineController = new CreateLineController();
 const updateLineController = new UpdateLineController();
 const getAllLinesController = new GetAllLinesController();
+const getLineByIdController = new GetLineByIdController();
 
 const createStopPointController = new CreateStopPointController();
 
@@ -21,7 +23,8 @@ const deleteLineStopPointController = new DeleteLineStopPointController();
 
 lineRoutes.post("", createLineController.handle);
 lineRoutes.put("", updateLineController.handle);
-lineRoutes.get("", getAllLinesController.handle);
+lineRoutes.get("/all", getAllLinesController.handle);
+lineRoutes.get("", getLineByIdController.handle)
 
 lineRoutes.post("/stop-point", createStopPointController.handle);
 
