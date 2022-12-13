@@ -45,6 +45,7 @@ export class AuthenticateUserUseCase {
       name: bodyUser.name + " " + bodyUser.last_name,
       email: bodyUser.email,
       type: bodyUser.type,
+      token,
     };
 
     return {

@@ -80,7 +80,8 @@ var AuthenticateUserUseCase = /** @class */ (function () {
                             id: bodyUser.id,
                             name: bodyUser.name + " " + bodyUser.last_name,
                             email: bodyUser.email,
-                            type: bodyUser.type
+                            type: bodyUser.type,
+                            token: token
                         };
                         return [2 /*return*/, {
                                 user: user,
